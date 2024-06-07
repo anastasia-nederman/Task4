@@ -1,5 +1,5 @@
 ﻿using System;
-// test
+
 namespace SkalProj_Datastrukturer_Minne
 {
     class Program
