@@ -1,5 +1,31 @@
 ﻿using System;
 
+/*
+1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion.
+
+Stacken och heapen är två minnetyper. 
+Stacken är som en hög med många böcker som ligger på varandra. Man kan bara använda den boken som ligger på toppen.
+Om man vill använda en bok som ligger under de andra böcker så måste man ta bort alla böckerna ovan.
+Stacken hanterar minnet automatiskt och man behöver inte göra något.
+Heapen är som en bokhylla där böcker står bredvid varandra. Man kan enkelt ta vilken bok som helst och använda den.
+Stacken hanterar inte minne automatiskt och man behöver ta bort gamla böcker som man inte vill ha längre ("garbage collection").
+
+2. Vad är Value Types respektive Reference Types och vad skiljer dem åt? 
+
+Value Types är t.ex. bool, char, double. 
+När man förändrar en variabel, det påverkar inte andra variablar.
+Reference Types är t.ex. string, array, class. 
+Reference är som address. Två variablar kan visa på sammma address. 
+Om man försöker då förändra en variabel, förändras den annan automatiskt.
+
+3. Följande metoder (se bild) genererar olika svar. Den första returnerar 3, den andra returnerar 4, varför?
+
+För att den första bilden visar value types och den andra bilden visar reference types.
+I den första metoden finns det x och y - två olika int. När y får ett annat värde, det påverkar inte x.
+I den andra metoden x och y fungerar som reference types. De visar på samma objekt. 
+Så när man förändrar y, x förändras också automatiskt på samma sätt.
+*/
+
 namespace SkalProj_Datastrukturer_Minne
 {
     class Program
