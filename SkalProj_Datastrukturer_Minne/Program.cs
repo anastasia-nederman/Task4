@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 
 /*
 1. Hur fungerar stacken och heapen? Förklara gärna med exempel eller skiss på dess grundläggande funktion.
@@ -98,13 +100,69 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+            List<string> theList = new List<string>();
 
-            //switch(nav){...}
+            while (true)
+            {
+                Console.WriteLine("Please type + and a word of your choice to add it in the list or - and a word to remove it from the list");
+                Console.WriteLine("Type 0 if you want to return to the main menu");
+
+                string input = Console.ReadLine();
+
+                if (input == "0")
+                    break;
+
+                if (input.Length < 2)
+                {
+                    Console.WriteLine("You entered something wrong. Please use only + or - followed by a word.");
+                    continue;
+                }
+
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav)
+                {
+                    case '+':
+                        theList.Add(value);
+                        Console.WriteLine($"You added: {value}");
+                        Console.WriteLine($"List count: {theList.Count}, List capacity: {theList.Capacity}");
+                        break;
+                    case '-':
+                        if (theList.Remove(value))
+                        {
+                            Console.WriteLine($"You removed: {value}");
+                            Console.WriteLine($"List count: {theList.Count}, List capacity: {theList.Capacity}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Could not find: {value}");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("You entered something wrong. Please use only + or - followed by a word.");
+                        break;
+                }
+            }
+
         }
+
+        /*
+        2. När ökar listans kapacitet? (Alltså den underliggande arrayens storlek)
+        När listan är full och jag försöker lägga till ett element.
+
+        3. Med hur mycket ökar kapaciteten? 
+        Listen blir dubbel så stor.
+
+        4. Varför ökar inte listans kapacitet i samma takt som element läggs till?
+        För att det behövs inte. Listan är tillräckligt stor för att lägga till några fler element. 
+
+        5. Minskar kapaciteten när element tas bort ur listan?
+        Nej.
+
+        6. När är det då fördelaktigt att använda en egendefinierad array istället för en lista?
+        När vi vet precis hur stor en array måste vara. Om vi vet att vi inte kommer att förändra storleken.
+        */
 
         /// <summary>
         /// Examines the datastructure Queue
