@@ -45,7 +45,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
-                    + "\n4. CheckParenthesis"
+                    + "\n4. Check the parentheses"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -69,7 +69,7 @@ namespace SkalProj_Datastrukturer_Minne
                         ExamineStack();
                         break;
                     case '4':
-                        CheckParanthesis();
+                        CheckParentheses();
                         break;
                     /*
                      * Extend the menu to include the recursive 
@@ -100,7 +100,7 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
 
-            List<string> theList = new List<string>();
+            var theList = new List<string>();
 
             while (true)
             {
@@ -174,6 +174,63 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+            var queue = new Queue<string>();
+
+            while (true)
+            {
+                Console.WriteLine("Please type + and a name to add a person to the queue or - to remove a person from the queue");
+                Console.WriteLine("Type 0 if you want to return to the main menu");
+
+                string input = Console.ReadLine();
+
+                if (input == "0")
+                    break;
+
+                if (input.Length < 2 && input[0] != '-')
+                {
+                    Console.WriteLine("You entered something wrong. Please use only + followed by a name or -.");
+                    continue;
+                }
+
+                char nav = input[0];
+                string name = input.Length > 1 ? input.Substring(1).Trim() : null;
+
+                switch (nav)
+                {
+                    case '+':
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            queue.Enqueue(name);
+                            Console.WriteLine($"You added: {name}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("You should add a name after +.");
+                        }
+                        break;
+                    case '-':
+                        if (queue.Count > 0)
+                        {
+                            string removedPerson = queue.Dequeue();
+                            Console.WriteLine($"You removed: {removedPerson}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Queue is empty. You can't remove anyone.");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("You entered something wrong. Please use only + followed by a name or -.");
+                        break;
+                }
+
+                Console.WriteLine("Current queue:");
+                foreach (var person in queue)
+                {
+                    Console.WriteLine(person);
+                }
+            }
         }
 
         /// <summary>
@@ -186,9 +243,36 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            /*
+            Simulera ännu en gång ICA-kön på papper. Denna gång med en stack. Varför är det 
+inte så smart att använda en stack i det här fallet? 
+
+            För att Kalle (den första personen) måste vänta till alla andra lämnar kön innan han kan gå.
+            */
+
+            Console.WriteLine("Enter a string to reverse:");
+            string input = Console.ReadLine();
+
+            var stack = new Stack<char>();
+
+            foreach (char c in input)
+            {
+                stack.Push(c);
+            }
+
+            char[] reversedArray = new char[input.Length];
+            int index = 0;
+            while (stack.Count > 0)
+            {
+                reversedArray[index++] = stack.Pop();
+            }
+
+            string reversed = new string(reversedArray);
+            Console.WriteLine($"Reversed string: {reversed}");
         }
 
-        static void CheckParanthesis()
+        static void CheckParentheses()
         {
             /*
              * Use this method to check if the paranthesis in a string is Correct or incorrect.
@@ -196,6 +280,50 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+            Console.WriteLine("Enter a string to check the parentheses:");
+            string input = Console.ReadLine();
+
+            var stack = new Stack<char>();
+            bool isCorrect = true;
+
+            foreach (char c in input)
+            {
+                if (c == '(' || c == '{' || c == '[')
+                {
+                    stack.Push(c);
+                }
+                else if (c == ')' || c == '}' || c == ']')
+                {
+                    if (stack.Count == 0)
+                    {
+                        isCorrect = false;
+                        break;
+                    }
+
+                    char top = stack.Pop();
+                    if ((c == ')' && top != '(') ||
+                        (c == '}' && top != '{') ||
+                        (c == ']' && top != '['))
+                    {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+            }
+
+            if (stack.Count != 0)
+            {
+                isCorrect = false;
+            }
+
+            if (isCorrect)
+            {
+                Console.WriteLine("The parentheses in the string are correct.");
+            }
+            else
+            {
+                Console.WriteLine("The parentheses in the string are not correct.");
+            }
         }
 
     }
